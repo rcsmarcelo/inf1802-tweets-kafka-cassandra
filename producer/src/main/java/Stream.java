@@ -45,9 +45,17 @@ public class Stream implements LifecycleManager, Serializable {
         configProducer();
         Listener = new StatusListener() {
             public void onStatus(Status status) {
-                Tweet tt = new Tweet(status.getId(), status.getUser().getName(), status.getText(), status.getCreatedAt(),
-                        status.getPlace().getCountry(), status.getSource(), status.isTruncated(), status.getGeoLocation(),
-                        status.isFavorited(), status.isRetweeted(), status.getContributors());
+                Tweet tt;
+                if (status.getGeoLocation() != null)
+                    tt = new Tweet(status.getId(), status.getUser().getName(), status.getText(), status.getCreatedAt(),
+                            status.getPlace().getCountry(), status.getSource(), status.isTruncated(), status.getGeoLocation(),
+                            status.isFavorited(), status.isRetweeted(), status.getContributors().toString());
+                else {
+                    GeoLocation geo = new GeoLocation(0,0);
+                    tt = new Tweet(status.getId(), status.getUser().getName(), status.getText(), status.getCreatedAt(),
+                            status.getPlace().getCountry(), status.getSource(), status.isTruncated(), geo,
+                            status.isFavorited(), status.isRetweeted(), status.getContributors().toString());
+                }
                 System.out.println("@" + tt.getUsername() + ":" + " " + tt.getTweetText());
                 ProducerRecord<String, Tweet> Record = new ProducerRecord<String, Tweet>
                         ("tweets-input", tt);
@@ -69,7 +77,7 @@ public class Stream implements LifecycleManager, Serializable {
         };
         Ts.addListener(Listener);
 
-        String terms = "smh";
+        String terms = "trump";
         FilterQuery query = new FilterQuery();
         query.track(terms.split(","));
         Ts.filter(query);

@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import com.datastax.driver.core.*;
 import com.datastax.driver.core.utils.UUIDs;
 import twitter4j.GeoLocation;
+
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
@@ -16,7 +18,8 @@ public class ConsumerDemoWithDeserializer {
 
     private static Logger logger = LoggerFactory.getLogger(ConsumerDemoWithDeserializer.class.getName());
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
+
 
         // Criar as propriedades do consumidor
         Properties properties = new Properties();
@@ -26,26 +29,31 @@ public class ConsumerDemoWithDeserializer {
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "consumer_demo");
         properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
+
+
+        TweetRepository tr = initCassandra();
+        TweetCollectorApplication.start();
         // Criar o consumidor
         KafkaConsumer<String ,Tweet> consumer = new KafkaConsumer<>(properties);
 
         // Subscrever o consumidor para o nosso(s) tópico(s)
-        consumer.subscribe(Collections.singleton("meu_topico"));
-
-        initCassandra();
+        consumer.subscribe(Collections.singleton("tweets-input"));
 
         // Ler as mensagens
         while (true) {  // Apenas como demo, usaremos um loop infinito
             ConsumerRecords<String, Tweet> poll = consumer.poll(Duration.ofMillis(1000));
             for (ConsumerRecord record : poll) {
                 Tweet tt = Tweet.class.cast(record);
+                System.out.println(tt.getTweetText());
+                tr.insertTweet(tt);
+                tr.insertTweetByCountry(tt);
+                System.out.println("B O I");
                 logger.info(record.topic() + " - " + record.partition() + " - " + record.value());
             }
         }
     }
 
-    private static void initCassandra() {
-        System.out.println("Sup");
+    private static TweetRepository initCassandra() {
         Cluster cluster = null;
         try {
             cluster = Cluster.builder()
@@ -69,6 +77,8 @@ public class ConsumerDemoWithDeserializer {
 
             tr.createTableTweetsByCountry();
             System.out.println("Creating table TweetsByUser...\n");
+
+            return tr;
 
         } finally {
             if (cluster != null) cluster.close();

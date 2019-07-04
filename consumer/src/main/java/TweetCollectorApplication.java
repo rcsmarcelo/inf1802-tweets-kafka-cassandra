@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class TweetCollectorApplication {
     private static final Logger logger = Logger.getLogger(TweetCollectorApplication.class.getName());
 
-    private static void start() throws IOException {
+    protected static void start() throws IOException {
         // O hostname está na variável de ambiente HOSTNAME ou assume localhost
         String hostname = Optional.ofNullable(System.getenv("HOSTNAME")).orElse("localhost");
         // A porta está na variável de ambiente PORT ou assume localhost
@@ -38,10 +38,6 @@ public class TweetCollectorApplication {
             }
         }));
         server.start();
-
-    }
-    public static void main(String[] args) throws Exception {
-        start();
     }
 
 }

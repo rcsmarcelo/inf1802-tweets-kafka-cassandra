@@ -32,7 +32,7 @@ public class TweetRepository {
                 .append("longitude double, ")
                 .append("isfavorited boolean, ")
                 .append("isretweeted boolean, ")
-                .append("contributors list<bigint>);");
+                .append("contributors text);");
         final String query = sb.toString();
 
         System.out.println(query);
@@ -57,7 +57,7 @@ public class TweetRepository {
                 .append("longitude double, ")
                 .append("isfavorited boolean, ")
                 .append("isretweeted boolean, ")
-                .append("contributors list<bigint>, PRIMARY KEY ((id, country)));");
+                .append("contributors text, PRIMARY KEY ((id, country)));");
         final String query = sb.toString();
 
         System.out.println(query);

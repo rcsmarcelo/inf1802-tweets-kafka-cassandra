@@ -11,13 +11,13 @@ public class Tweet {
     private twitter4j.GeoLocation GeoLocation;
     private boolean     Favorited;
     private boolean     Retweeted;
-    private long[]      Contributors;
+    private String      Contributors;
 
     public Tweet() {}
 
     public Tweet(long id, String username, String tttext, Date date, String country, String source,
                  boolean truncated, twitter4j.GeoLocation geolocation, boolean favorited, boolean retweeted,
-                 long[] contributors) {
+                 String contributors) {
         ID = id;
         Username = username;
         TweetText = tttext;
@@ -69,7 +69,7 @@ public class Tweet {
 
     public void setCountry(String country) { Country = country; }
 
-    public void setContributors(long[] contributors) { Contributors = contributors; }
+    public void setContributors(String contributors) { Contributors = contributors; }
 
     public String getUsername() {
         return Username;
@@ -109,7 +109,7 @@ public class Tweet {
         return Retweeted;
     }
 
-    public long[] getContributors() { return Contributors; }
+    public String getContributors() { return Contributors; }
 
     public String toString() { return "@" + this.Username +
             ": " + this.TweetText; }

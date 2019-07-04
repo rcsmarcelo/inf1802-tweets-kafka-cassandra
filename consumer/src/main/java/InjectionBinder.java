@@ -5,7 +5,7 @@ import javax.inject.Singleton;
 public class InjectionBinder extends AbstractBinder {
     @Override
     protected void configure() {
-        bind(ConsumerDemo.class)
+        bind(ConsumerDemoWithDeserializer.class)
                 .to(LifecycleManager.class)
                 .in(Singleton.class);
     }

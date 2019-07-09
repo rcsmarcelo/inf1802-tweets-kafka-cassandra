@@ -47,13 +47,17 @@ public class Stream implements LifecycleManager, Serializable {
             public void onStatus(Status status) {
                 Tweet tt;
                 if (status.getGeoLocation() != null)
-                    tt = new Tweet(status.getId(), status.getUser().getName(), status.getText(), status.getCreatedAt(),
-                            status.getPlace().getCountry(), status.getSource(), status.isTruncated(), status.getGeoLocation(),
+                    tt = new Tweet(status.getId(), status.getUser().getName().replace("'",""),
+                            status.getText().replace("'",""), status.getCreatedAt(),
+                            status.getPlace().getCountry(), status.getSource().replace("'",""),
+                            status.isTruncated(), status.getGeoLocation(),
                             status.isFavorited(), status.isRetweeted(), status.getContributors().toString());
                 else {
                     GeoLocation geo = new GeoLocation(0,0);
-                    tt = new Tweet(status.getId(), status.getUser().getName(), status.getText(), status.getCreatedAt(),
-                            status.getPlace().getCountry(), status.getSource(), status.isTruncated(), geo,
+                    tt = new Tweet(status.getId(), status.getUser().getName().replace("'",""),
+                            status.getText().replace("'",""), status.getCreatedAt(),
+                            status.getPlace().getCountry(), status.getSource().replace("'",""),
+                            status.isTruncated(), geo,
                             status.isFavorited(), status.isRetweeted(), status.getContributors().toString());
                 }
                 System.out.println("@" + tt.getUsername() + ":" + " " + tt.getTweetText());
@@ -77,7 +81,7 @@ public class Stream implements LifecycleManager, Serializable {
         };
         Ts.addListener(Listener);
 
-        String terms = "trump";
+        String terms = "smh,ffs";
         FilterQuery query = new FilterQuery();
         query.track(terms.split(","));
         Ts.filter(query);

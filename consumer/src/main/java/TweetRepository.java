@@ -1,8 +1,10 @@
+import com.datastax.driver.core.LocalDate;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import twitter4j.GeoLocation;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -21,7 +23,7 @@ public class TweetRepository {
 
         StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ")
                 .append(TABLE_NAME).append("(")
-                .append("id uuid PRIMARY KEY, ")
+                .append("id bigint PRIMARY KEY, ")
                 .append("tweettext text, ")
                 .append("username text, ")
                 .append("datesent date, ")
@@ -46,7 +48,7 @@ public class TweetRepository {
 
         StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ")
                 .append(TABLE_NAME_BY_COUNTRY).append("(")
-                .append("id uuid,")
+                .append("id bigint,")
                 .append("tweettext text, ")
                 .append("username text, ")
                 .append("datesent date, ")
@@ -57,7 +59,7 @@ public class TweetRepository {
                 .append("longitude double, ")
                 .append("isfavorited boolean, ")
                 .append("isretweeted boolean, ")
-                .append("contributors text, PRIMARY KEY ((id, country)));");
+                .append("contributors text, PRIMARY KEY (country, id));");
         final String query = sb.toString();
 
         System.out.println(query);
@@ -75,15 +77,15 @@ public class TweetRepository {
                 .append("VALUES (").append(tweet.getID()).append(", '")
                 .append(tweet.getUsername()).append("', '")
                 .append(tweet.getTweetText()).append("', '")
-                .append(tweet.getDateSent()).append("', '")
+                .append(LocalDate.fromMillisSinceEpoch(tweet.getDateSent().getTime())).append("', '")
                 .append(tweet.getCountry()).append("', '")
                 .append(tweet.getSource()).append("', ")
                 .append(tweet.isTruncated()).append(", ")
                 .append(tweet.getGeoLocation().getLatitude()).append(", ")
                 .append(tweet.getGeoLocation().getLongitude()).append(", ")
                 .append(tweet.isFavorited()).append(", ")
-                .append(tweet.isRetweeted()).append(", ")
-                .append(tweet.getContributors()).append(");");
+                .append(tweet.isRetweeted()).append(", '")
+                .append(tweet.getContributors()).append("');");
         final String query = sb.toString();
         session.execute(query);
 
@@ -102,15 +104,15 @@ public class TweetRepository {
                 .append("VALUES (").append(tweet.getID()).append(", '")
                 .append(tweet.getUsername()).append("', '")
                 .append(tweet.getTweetText()).append("', '")
-                .append(tweet.getDateSent()).append("', '")
+                .append(LocalDate.fromMillisSinceEpoch(tweet.getDateSent().getTime())).append("', '")
                 .append(tweet.getCountry()).append("', '")
                 .append(tweet.getSource()).append("', ")
                 .append(tweet.isTruncated()).append(", ")
                 .append(tweet.getGeoLocation().getLatitude()).append(", ")
                 .append(tweet.getGeoLocation().getLongitude()).append(", ")
                 .append(tweet.isFavorited()).append(", ")
-                .append(tweet.isRetweeted()).append(", ")
-                .append(tweet.getContributors()).append(");");
+                .append(tweet.isRetweeted()).append(", '")
+                .append(tweet.getContributors()).append("');");
         final String query = sb.toString();
         session.execute(query);
 
@@ -119,6 +121,10 @@ public class TweetRepository {
         System.out.println("insertTweetByCountry – end");
         session.execute(query);
 
+    }
+
+    public Date convertToDate(LocalDate dateToConvert) {
+        return new Date(dateToConvert.getMillisSinceEpoch());
     }
 
     public List<Tweet> selectAll() {
@@ -133,7 +139,7 @@ public class TweetRepository {
         for (Row r : rs) {
             GeoLocation geo = new GeoLocation(r.getDouble("latitude"), r.getDouble("longitude"));
             Tweet tt = new Tweet(r.getLong("id"), r.getString("username"),
-                    r.getString("tweettext"), r.getDate("datesent"), r.getString("country"),
+                    r.getString("tweettext"), convertToDate(r.getDate("datesent")), r.getString("country"),
                     r.getString("source"), r.getBool("istruncated"), geo,
                     r.getBool("isfavorited"), r.getBool("isretweeted"), null);
             System.out.println(tt.getCountry() + "  " + tt.getID() + " @" + tt.getUsername() + ":" + " " + tt.getTweetText());
@@ -155,7 +161,7 @@ public class TweetRepository {
         for (Row r : rs) {
             GeoLocation geo = new GeoLocation(r.getDouble("latitude"), r.getDouble("longitude"));
             Tweet tt = new Tweet(r.getLong("id"), r.getString("username"),
-                    r.getString("tweettext"), r.getDate("datesent"), r.getString("country"),
+                    r.getString("tweettext"),  convertToDate(r.getDate("datesent")), r.getString("country"),
                     r.getString("source"), r.getBool("istruncated"), geo,
                     r.getBool("isfavorited"), r.getBool("isretweeted"), null);
             System.out.println(tt.getCountry() + "  " + tt.getID() + " @" + tt.getUsername() + ":" + " " + tt.getTweetText());
@@ -178,7 +184,7 @@ public class TweetRepository {
         for (Row r : rs) {
             GeoLocation geo = new GeoLocation(r.getDouble("latitude"), r.getDouble("longitude"));
             Tweet tt = new Tweet(r.getLong("id"), r.getString("username"),
-                    r.getString("tweettext"), r.getDate("datesent"), r.getString("country"),
+                    r.getString("tweettext"),  convertToDate(r.getDate("datesent")), r.getString("country"),
                     r.getString("source"), r.getBool("istruncated"), geo,
                     r.getBool("isfavorited"), r.getBool("isretweeted"), null);
             System.out.println(tt.getCountry() + "  " + tt.getID() + " @" + tt.getUsername() + ":" + " " + tt.getTweetText());

@@ -37,7 +37,11 @@ public class TweetCollectorApplication {
                 }
             }
         }));
-        server.start();
     }
+
+    public static void main(String[] args) throws Exception {
+        start();
+    }
+
 
 }

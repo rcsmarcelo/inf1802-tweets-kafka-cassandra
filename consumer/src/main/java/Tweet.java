@@ -1,3 +1,5 @@
+import twitter4j.GeoLocation;
+
 import java.util.Date;
 
 public class Tweet {
@@ -67,9 +69,13 @@ public class Tweet {
         Retweeted = retweeted;
     }
 
-    public void setCountry(String country) { Country = country; }
+    public void setCountry(String country) {
+        Country = country;
+    }
 
-    public void setContributors(String contributors) { Contributors = contributors; }
+    public void setContributors(String contributors) {
+        Contributors = contributors;
+    }
 
     public String getUsername() {
         return Username;
@@ -79,7 +85,9 @@ public class Tweet {
         return DateSent;
     }
 
-    public String getCountry() { return Country; }
+    public String getCountry() {
+        return Country;
+    }
 
     public String getTweetText() {
         return TweetText;
@@ -109,7 +117,9 @@ public class Tweet {
         return Retweeted;
     }
 
-    public String getContributors() { return Contributors; }
+    public String getContributors() {
+        return Contributors;
+    }
 
     public String toString() { return "@" + this.Username +
             ": " + this.TweetText; }

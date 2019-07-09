@@ -6,20 +6,20 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.datastax.driver.core.*;
-import com.datastax.driver.core.utils.UUIDs;
-import twitter4j.GeoLocation;
-
-import java.io.IOException;
+import java.io.Serializable;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 
-public class ConsumerDemoWithDeserializer {
+public class ConsumerDemoWithDeserializer implements LifecycleManager, Serializable {
 
     private static Logger logger = LoggerFactory.getLogger(ConsumerDemoWithDeserializer.class.getName());
+    private boolean isConsuming = false;
+    private Thread ConsumerThread;
+    private TweetRepository tr;
 
-    public static void main(String[] args) throws IOException {
-
+    public void start() {
+        tr = initCassandra();
 
         // Criar as propriedades do consumidor
         Properties properties = new Properties();
@@ -29,28 +29,37 @@ public class ConsumerDemoWithDeserializer {
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "consumer_demo");
         properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
-
-
-        TweetRepository tr = initCassandra();
-        TweetCollectorApplication.start();
         // Criar o consumidor
         KafkaConsumer<String ,Tweet> consumer = new KafkaConsumer<>(properties);
 
         // Subscrever o consumidor para o nosso(s) tópico(s)
         consumer.subscribe(Collections.singleton("tweets-input"));
 
-        // Ler as mensagens
-        while (true) {  // Apenas como demo, usaremos um loop infinito
-            ConsumerRecords<String, Tweet> poll = consumer.poll(Duration.ofMillis(1000));
-            for (ConsumerRecord record : poll) {
-                Tweet tt = Tweet.class.cast(record);
-                System.out.println(tt.getTweetText());
-                tr.insertTweet(tt);
-                tr.insertTweetByCountry(tt);
-                System.out.println("B O I");
-                logger.info(record.topic() + " - " + record.partition() + " - " + record.value());
+        //start control variable
+        isConsuming = true;
+
+        ConsumerThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(isConsuming)
+                {
+                    ConsumerRecords<String, Tweet> poll = consumer.poll(Duration.ofMillis(1000));
+                    for (ConsumerRecord record : poll) {
+                        Tweet tt = Tweet.class.cast(record.value());
+                        System.out.println(tt.getGeoLocation());
+                        try {
+                            tr.insertTweet(tt);
+                            tr.insertTweetByCountry(tt);
+                        } catch (Exception e) {
+                            System.out.println(e);
+                            break;
+                        }
+                        logger.info(record.topic() + " - " + record.partition() + " - " + record.value());
+                    }
+                }
             }
-        }
+        });
+        ConsumerThread.start();
     }
 
     private static TweetRepository initCassandra() {
@@ -80,8 +89,21 @@ public class ConsumerDemoWithDeserializer {
 
             return tr;
 
-        } finally {
-            if (cluster != null) cluster.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
         }
+    }
+
+    public void stop() {
+        isConsuming = false;
+        tr.selectAll();
+        System.out.println();
+        tr.selectAllByCountry();
+        System.out.println();
+        tr.selectTweetByCountry("United States");
+        System.out.println();
+        tr.deleteTable("tweets");
+        tr.deleteTable("tweetsByCountry");
     }
 }

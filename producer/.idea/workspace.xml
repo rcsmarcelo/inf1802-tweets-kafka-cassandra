@@ -2,22 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8284d485-bb82-409e-bf3c-bff752e403b0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../consumer/.idea/libraries/com_datastax_cassandra_cassandra_driver_core_2_1_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../consumer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../consumer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/consumer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../consumer/consumer.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../consumer/src/main/java/ConsumerDemoWithDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../consumer/src/main/java/ConsumerDemoWithDeserializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/src/main/java/Tweet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../consumer/src/main/java/Tweet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/src/main/java/TweetCollectorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../consumer/src/main/java/TweetCollectorApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../consumer/src/main/java/TweetRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../consumer/src/main/java/TweetRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../consumer/target/classes/ConsumerDemoWithDeserializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/../consumer/target/classes/ConsumerDemoWithDeserializer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/target/classes/Tweet.class" beforeDir="false" afterPath="$PROJECT_DIR$/../consumer/target/classes/Tweet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/target/classes/TweetCollectorApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/../consumer/target/classes/TweetCollectorApplication.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../consumer/target/classes/TweetRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/../consumer/target/classes/TweetRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Stream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Stream.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Stream$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Stream$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Stream$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Stream$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Stream.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Stream.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -69,8 +59,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Stream.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="83" column="28" lean-forward="true" selection-start-line="83" selection-start-column="28" selection-end-line="83" selection-end-column="28" />
+            <state relative-caret-position="330">
+              <caret line="83" column="33" lean-forward="true" selection-start-line="83" selection-start-column="33" selection-end-line="83" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -78,7 +68,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/TweetCollectorApplication.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
+            <state relative-caret-position="390">
               <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -90,7 +80,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/TweetCollectorResource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-104">
+            <state relative-caret-position="45">
               <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
             </state>
           </provider>
@@ -224,7 +214,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1562679775795" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1562681722889" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -401,16 +391,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TweetCollectorResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-104">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/TweetCollectorApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
+        <state relative-caret-position="390">
           <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -418,10 +401,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TweetCollectorResource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Stream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="83" column="28" lean-forward="true" selection-start-line="83" selection-start-column="28" selection-end-line="83" selection-end-column="28" />
+        <state relative-caret-position="330">
+          <caret line="83" column="33" lean-forward="true" selection-start-line="83" selection-start-column="33" selection-end-line="83" selection-end-column="33" />
         </state>
       </provider>
     </entry>

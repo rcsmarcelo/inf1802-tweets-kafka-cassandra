@@ -205,11 +205,11 @@ public class TweetRepository {
         System.out.println("deleteTweet – end");
     }
 
-    public void deleteTweetByCountry(String country, UUID id) {
+    public void deleteTweetByCountry(String country) {
         System.out.println("deleteTweetByCountry – init");
         StringBuilder sb = new StringBuilder("DELETE FROM ")
                 .append(TABLE_NAME_BY_COUNTRY).append(" WHERE country = '")
-                .append(country).append("' AND id =").append(id).append(";");
+                .append(country).append("';");
         final String query = sb.toString();
         session.execute(query);
         System.out.println(query);

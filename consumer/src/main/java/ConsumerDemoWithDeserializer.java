@@ -101,9 +101,11 @@ public class ConsumerDemoWithDeserializer implements LifecycleManager, Serializa
         System.out.println();
         tr.selectAllByCountry();
         System.out.println();
-        tr.selectTweetByCountry("United States");
+        tr.deleteTweetByCountry("United States");
         System.out.println();
-        tr.deleteTable("tweets");
-        tr.deleteTable("tweetsByCountry");
+        tr.selectAllByCountry();
+        System.out.println();
+        //tr.deleteTable("tweets");
+        //tr.deleteTable("tweetsByCountry");
     }
 }
